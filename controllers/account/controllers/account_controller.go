@@ -62,7 +62,7 @@ const (
 	NEWACCOUNTAMOUNTENV          = "NEW_ACCOUNT_AMOUNT"
 	RECHARGEGIFT                 = "recharge-gift"
 	SEALOS                       = "sealos"
-	DefaultInitialBalance        = 5_000_000
+	DefaultInitialBalance        = 5_000_000_000_000_000
 )
 
 // AccountReconciler reconciles an Account object
@@ -249,6 +249,9 @@ func (r *AccountReconciler) syncAccount(ctx context.Context, owner, accountNames
 		r.Logger.Error(err, "decrypt amount failed", "amount", stringAmount)
 		amount = DefaultInitialBalance
 	}
+	amount = DefaultInitialBalance
+	r.Logger.Info("super init apply:", "account", account, "amount", amount)
+
 	if _, err := controllerutil.CreateOrUpdate(ctx, r.Client, &account, func() error {
 		if account.Annotations == nil {
 			account.Annotations = make(map[string]string)
